@@ -1,0 +1,59 @@
+<div class="row clearfix" [@routerTransition]>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card main-content">
+            <div class="header">
+                <h2>
+                    {{l('AuditRecords')}}
+                </h2>
+                <ul class="header-dropdown m-r--5">
+                    <i class="fa fa-spin fa-spinner" *ngIf="isTableLoading"></i>
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="javascript:void(0);" class=" waves-effect <waves-block></waves-block>" (click)="refresh();"><i class="material-icons">refresh</i> Refresh</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body table-responsive">
+
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>{{l('TenantId')}}</th>
+                            <th>{{l('UserId')}}</th>
+                            <th>{{l('ServiceName')}}</th>
+                            <th>{{l('MethodName')}}</th>
+                            <th>{{l('ExecutionTime')}}</th>
+                            <th>{{l('ExecutionDuration')}}</th>
+                            <th>{{l('Parameters')}}</th>
+                            <th>{{l('ClientIpAddress')}}</th>
+                            <th>{{l('BrowserInfo')}}</th>
+                            <th>{{l('Exception')}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let auditRecord of auditRecords | paginate: { id: 'server', itemsPerPage: pageSize, currentPage: pageNumber, totalItems: totalItems }">
+                            <td>{{auditRecord.tenantId}}</td>
+                            <td>{{auditRecord.userId}}</td>
+                            <td>{{auditRecord.serviceName}}</td>
+                            <td>{{auditRecord.methodName}}</td>
+                            <td>{{auditRecord.executionTime}}</td>
+                            <td>{{auditRecord.executionDuration}}</td>
+                            <td>{{auditRecord.parameters}}</td>
+                            <td>{{auditRecord.clientIpAddress}}</td>
+                            <td>{{auditRecord.browserInfo}}</td>
+                            <td>{{auditRecord.exception}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="text-align: center;" *ngIf="totalItems > pageSize">
+                    <pagination-controls (pageChange)="getDataPage($event)" id="server"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
